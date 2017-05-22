@@ -78,7 +78,7 @@ app.post('/user/login', (request, response) => {
 app.post('/user/comment', (request, response) => {
 
     console.log(request.body);
-    let username = request.session.username;
+    let username = "request.session.username;"
     let content = request.body.content;
 
     DB.query('INSERT INTO msg set ?', {
