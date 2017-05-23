@@ -8,6 +8,7 @@ const session = require('express-session');
 
 const app = express();
 
+
 //基本设置
 app.use(express.static(__dirname + '/public'));
 
@@ -32,6 +33,7 @@ function md5(data) {
 }
 
 
+
 //注册
 app.post('/user/sign', (request, response) => {
     console.log(request.body);
@@ -52,6 +54,7 @@ app.post('/user/sign', (request, response) => {
         }
     });
 });
+
 
 
 //登录
@@ -129,6 +132,7 @@ app.all('/', (request, response) => {
     let username = request.session.username;
 
     if (checkStatus(request,response)) {
+
         DB.query('SELECT * FROM msg', (err, rows) => {
             if (err) {
                 console.log(err);
@@ -145,6 +149,7 @@ app.all('/', (request, response) => {
     }
 
 });
+
 
 const checkStatus = (request, response) => {
     let username = request.session.username;
