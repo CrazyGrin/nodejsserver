@@ -73,7 +73,7 @@ app.post('/user/login', (request, response) => {
         } else {
             if (rows[0].password === password) {
                 request.session.username = username;
-                response.redirect('http://localhost:3000/');
+                response.redirect('http://localhost:3000/index');
                 response.render('index', {
                     name: username
                 });
@@ -102,7 +102,7 @@ app.post('/user/comment/creat', (request, response) => {
             console.log(err);
         } else {
             console.log('success');
-            response.redirect('http://localhost:3000/');
+            response.redirect('http://localhost:3000/index');
         }
     });
 
@@ -140,7 +140,7 @@ app.post('/user/comment/delete', (request, response) => {
 });
 
 //主页
-app.all('/', (request, response) => {
+app.all('/index', (request, response) => {
     console.log(request.body);
 
     let username = request.session.username;
