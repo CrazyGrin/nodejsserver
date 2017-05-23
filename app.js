@@ -54,7 +54,6 @@ app.post('/user/sign', (request, response) => {
 app.post('/user/login', (request, response) => {
     console.log(request.body);
 
-
     let username = request.body.username;
     let password = request.body.password;
 
@@ -91,6 +90,7 @@ app.post('/user/comment', (request, response) => {
         if (err) {
             console.log(err);
         } else {
+
             console.log('success');
             response.redirect('http://localhost:3000/');
         }
