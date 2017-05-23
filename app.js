@@ -61,14 +61,10 @@ app.post('/user/sign', (request, response) => {
 //登录
 app.post('/user/login', (request, response) => {
 
-
-    {
-        checkStatus(request, response);
-    }
-
     let username = request.body.username;
     let password = request.body.password;
 
+    console.log(request.body);
     password = md5(password);
 
     DB.query('SELECT password FROM users WHERE username = ?', username, (err, rows) => {
@@ -82,7 +78,7 @@ app.post('/user/login', (request, response) => {
                     name: username
                 });
             } else {
-                response.send('Incorrect password');
+                response.end('Incorrect password');
             }
         }
     });
@@ -93,11 +89,6 @@ app.post('/user/login', (request, response) => {
 
 //评论
 app.post('/user/comment/creat', (request, response) => {
-
-
-    {
-        checkStatus(request, response);
-    }
 
     console.log(request.body);
     let username = request.session.username;
@@ -121,10 +112,6 @@ app.post('/user/comment/creat', (request, response) => {
 //查看我的评论
 app.get('/user/comment/show', (request, response) => {
 
-    {
-        checkStatus(request, response);
-    }
-
     console.log(request.body);
     let username = request.session.username;
 
@@ -137,17 +124,12 @@ app.get('/user/comment/show', (request, response) => {
                 name: username
             });
         }
-
     });
+
 });
-
-
 //主页
 app.all('/', (request, response) => {
-
-    {
-        checkStatus(request, response);
-    }
+    console.log(request.body);
 
     let username = request.session.username;
 
