@@ -36,6 +36,7 @@ function md5(data) {
 
 //注册
 app.post('/user/sign', (request, response) => {
+
     console.log(request.body);
     let username = request.body.username;
     let password = request.body.password;
@@ -59,7 +60,11 @@ app.post('/user/sign', (request, response) => {
 
 //登录
 app.post('/user/login', (request, response) => {
-    console.log(request.body);
+
+
+    {
+        checkStatus(request, response);
+    }
 
     let username = request.body.username;
     let password = request.body.password;
@@ -89,6 +94,11 @@ app.post('/user/login', (request, response) => {
 //评论
 app.post('/user/comment/creat', (request, response) => {
 
+
+    {
+        checkStatus(request, response);
+    }
+
     console.log(request.body);
     let username = request.session.username;
     let content = request.body.content;
@@ -110,6 +120,11 @@ app.post('/user/comment/creat', (request, response) => {
 
 //查看我的评论
 app.get('/user/comment/show', (request, response) => {
+
+    {
+        checkStatus(request, response);
+    }
+
     console.log(request.body);
     let username = request.session.username;
 
@@ -122,6 +137,7 @@ app.get('/user/comment/show', (request, response) => {
                 name: username
             });
         }
+
     });
 });
 
@@ -129,24 +145,24 @@ app.get('/user/comment/show', (request, response) => {
 //主页
 app.all('/', (request, response) => {
 
+    {
+        checkStatus(request, response);
+    }
+
     let username = request.session.username;
 
-    if (checkStatus(request,response)) {
 
-        DB.query('SELECT * FROM msg', (err, rows) => {
-            if (err) {
-                console.log(err);
-            } else {
-                response.render('index', {
-                    rows: rows,
-                    name: username || 'deafault'
-                });
-                console.log('success');
-            }
-        });
-    } else {
-        response.redirect('http://localhost:3000/login.html');
-    }
+    DB.query('SELECT * FROM msg WHERE content_status = 1', (err, rows) => {
+        if (err) {
+            console.log(err);
+        } else {
+            response.render('index', {
+                rows: rows,
+                name: username || 'deafault'
+            });
+            console.log('success');
+        }
+    });
 
 });
 
@@ -154,6 +170,7 @@ app.all('/', (request, response) => {
 const checkStatus = (request, response) => {
     let username = request.session.username;
     if (username !== undefined) {
+        response.redirect('http://localhost:3000/');
         return true;
     } else {
         response.redirect('http://localhost:3000/login.html');
