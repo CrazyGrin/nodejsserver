@@ -115,7 +115,7 @@ app.get('/user/comment/show', (request, response) => {
     console.log(request.body);
     let username = request.session.username;
 
-    DB.query('SELECT * FROM msg WHERE username = ?', username, (err, rows) => {
+    DB.query('SELECT * FROM msg WHERE content_status=1 and username = ?', username, (err, rows) => {
         if (err) {
             console.log(err);
         } else {
@@ -127,6 +127,18 @@ app.get('/user/comment/show', (request, response) => {
     });
 
 });
+
+//删除评论
+app.post('/user/comment/delete', (request, response) => {
+    DB.query('UPDATE msg SET content_status=0 WHERE content_id = ?', request.body.content_id, (err, rows) => {
+        if (err) {
+            console.log(err);
+        } else {
+            response.redirect('http://localhost:3000/user/comment/show');
+        }
+    });
+});
+
 //主页
 app.all('/', (request, response) => {
     console.log(request.body);

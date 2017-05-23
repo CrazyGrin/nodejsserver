@@ -9,10 +9,12 @@
 	<br>
 	<hr>
 	{{#each rows}}
-	<form>
-	<p>第{{content_id}}条</p
+	<form action="/user/comment/delete" method="POST">
+	<input type="hidden" name="content_id" value="{{content_id}}">
+	<p>第{{content_id}}条</p>
 	<p>{{username}}</p>
 	<p>{{content}}</p>
+	<button type="submit">删除</button>
 	</form>
 	<hr>
 	{{/each}}
